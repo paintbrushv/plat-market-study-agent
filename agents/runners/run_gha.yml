@@ -1,0 +1,45 @@
+﻿name: market-study-agent
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 10 * * 1"
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      COSTAR_USERNAME: ${{ secrets.COSTAR_USERNAME }}
+      COSTAR_PASSWORD: ${{ secrets.COSTAR_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt || true
+          uv pip install -e .
+
+      - name: Run Market Study Agent
+        run: |
+          REPORT_DATE=$(date -u +%F)
+          uv run python agents/runners/run_local.py --config agents/configs/austin_tx.yaml --date $REPORT_DATE
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-study-report
+          path: |
+            reports/published/**/*
+            reports/logs/**/*

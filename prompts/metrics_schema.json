@@ -1,0 +1,55 @@
+{
+  "title": "MarketStudyMetrics",
+  "type": "object",
+  "properties": {
+    "metro_fundamentals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["metric", "value", "as_of", "source", "status"],
+        "properties": {
+          "metric": {"type": "string"},
+          "value": {"type": ["string", "number"]},
+          "as_of": {"type": "string"},
+          "source": {"type": "string"},
+          "status": {"type": "string", "enum": ["Factual", "Inferred"]}
+        }
+      }
+    },
+    "submarket_fundamentals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["submarket", "metric", "value", "as_of", "source"],
+        "properties": {
+          "submarket": {"type": "string"},
+          "metric": {"type": "string"},
+          "value": {"type": ["string", "number"]},
+          "as_of": {"type": "string"},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "forecasts": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["horizon", "metric", "forecast", "source", "confidence"],
+        "properties": {
+          "horizon": {"type": "string", "enum": ["1-year", "3-year", "5-year"]},
+          "metric": {"type": "string"},
+          "forecast": {"type": ["string", "number"]},
+          "source": {"type": "string"},
+          "confidence": {"type": "string"}
+        }
+      },
+      "allOf": [
+        {"contains": {"type": "object", "required": ["horizon"], "properties": {"horizon": {"const": "1-year"}}}},
+        {"contains": {"type": "object", "required": ["horizon"], "properties": {"horizon": {"const": "3-year"}}}},
+        {"contains": {"type": "object", "required": ["horizon"], "properties": {"horizon": {"const": "5-year"}}}}
+      ]
+    }
+  },
+  "required": ["metro_fundamentals"]
+}

@@ -1,0 +1,264 @@
+# Rent Roll Mapping Schema Reference
+# This file documents the canonical output schema and mapping config structure.
+# Individual PM system configs should follow this pattern.
+
+# =============================================================================
+# CANONICAL OUTPUT SCHEMA
+# =============================================================================
+# The standardized CSV output contains these columns:
+#
+# Required fields (for floorplan summary):
+#   - unit_id: Unit identifier (e.g., "101", "A-201")
+#   - floorplan_code: Floorplan/unit type code (e.g., "A1", "B2", "STUDIO")
+#   - bed_type: Standardized bed type (Studio, 1BR, 2BR, 3BR, 4BR)
+#   - bath_count: Number of bathrooms (float, e.g., 1.0, 1.5, 2.0)
+#   - sqft: Unit square footage (integer)
+#   - market_rent: Current market rent for the unit (float)
+#
+# Optional fields (for detailed analysis):
+#   - lease_rent: Actual lease/contract rent (float)
+#   - status: Occupancy status (Occupied, Vacant, Notice, Down, Model)
+#   - resident_name: Resident name (may be anonymized)
+#   - move_in_date: Move-in date (YYYY-MM-DD)
+#   - lease_start: Lease start date (YYYY-MM-DD)
+#   - lease_end: Lease expiration date (YYYY-MM-DD)
+#
+# Income breakdown (separated from base rent):
+#   - base_rent: Base rent amount only (float)
+#   - pet_rent: Pet rent/fee (float)
+#   - parking_rent: Parking income (float)
+#   - storage_rent: Storage income (float)
+#   - utility_reimbursement: RUBS/utility income (float)
+#   - other_income: Other recurring charges (float)
+#   - concessions: Monthly concession amount (float, typically negative)
+#   - total_rent: Sum of all income items (float)
+
+# =============================================================================
+# MAPPING CONFIG STRUCTURE
+# =============================================================================
+mapping_config:
+  # Metadata about the source system
+  source_system: "System Name"
+  version: "1.0"
+  description: "Description of this mapping"
+
+  # File format settings
+  file_settings:
+    # Expected file extensions
+    extensions: [".xlsx", ".xls", ".csv"]
+    # Header row location (0-indexed, or "auto" to detect)
+    header_row: 0
+    # Sheet name for Excel files (or index, or "auto")
+    sheet: 0
+    # Skip rows after header (for subtotals, etc.)
+    skip_rows_after_header: 0
+    # Encoding for CSV files
+    encoding: "utf-8"
+
+  # Column mappings: canonical_field -> [list of possible source column names]
+  # The script tries each name in order until a match is found
+  column_mappings:
+    unit_id:
+      - "Unit"
+      - "Unit #"
+      - "Unit Number"
+      - "UnitID"
+
+    floorplan_code:
+      - "Floor Plan"
+      - "Floorplan"
+      - "Unit Type"
+      - "Plan Code"
+      - "Type"
+
+    bed_type:
+      - "Beds"
+      - "Bedrooms"
+      - "BR"
+      - "Bed/Bath"  # Will need parsing
+
+    bath_count:
+      - "Baths"
+      - "Bathrooms"
+      - "BA"
+
+    sqft:
+      - "Sq Ft"
+      - "SqFt"
+      - "Square Feet"
+      - "SQFT"
+      - "Size"
+
+    market_rent:
+      - "Market Rent"
+      - "Market"
+      - "Mkt Rent"
+      - "Market Rate"
+
+    lease_rent:
+      - "Lease Rent"
+      - "Actual Rent"
+      - "Contract Rent"
+      - "Current Rent"
+      - "Rent"
+
+    status:
+      - "Status"
+      - "Unit Status"
+      - "Occupancy"
+      - "Occ Status"
+
+    resident_name:
+      - "Resident"
+      - "Resident Name"
+      - "Tenant"
+      - "Name"
+
+    move_in_date:
+      - "Move In"
+      - "Move-In"
+      - "Move In Date"
+      - "MoveIn"
+
+    lease_start:
+      - "Lease Start"
+      - "Lease From"
+      - "Start Date"
+
+    lease_end:
+      - "Lease End"
+      - "Lease Expiration"
+      - "Lease Exp"
+      - "Expiration"
+      - "End Date"
+
+  # Income column mappings (for charge breakdown)
+  # These are columns that contain income amounts beyond base rent
+  income_columns:
+    base_rent:
+      - "Base Rent"
+      - "Rent"
+      - "Contract Rent"
+
+    pet_rent:
+      - "Pet Rent"
+      - "Pet Fee"
+      - "Pet"
+
+    parking_rent:
+      - "Parking"
+      - "Parking Rent"
+      - "Garage"
+      - "Carport"
+
+    storage_rent:
+      - "Storage"
+      - "Storage Rent"
+
+    utility_reimbursement:
+      - "RUBS"
+      - "Utility"
+      - "Utilities"
+      - "Utility Reimbursement"
+      - "Water"
+      - "Electric"
+
+    other_income:
+      - "Other"
+      - "Other Income"
+      - "Misc"
+      - "Additional"
+
+    concessions:
+      - "Concession"
+      - "Concessions"
+      - "Discount"
+      - "Credit"
+
+  # Status value normalization
+  status_mappings:
+    Occupied:
+      - "Occupied"
+      - "Current"
+      - "Leased"
+      - "O"
+    Vacant:
+      - "Vacant"
+      - "Available"
+      - "V"
+    Notice:
+      - "Notice"
+      - "NTV"
+      - "Notice to Vacate"
+      - "N"
+    Down:
+      - "Down"
+      - "Offline"
+      - "Make Ready"
+      - "Rehab"
+    Model:
+      - "Model"
+      - "Show"
+
+  # Bed type normalization (maps various formats to standard)
+  bed_type_mappings:
+    Studio:
+      - "Studio"
+      - "STU"
+      - "S"
+      - "0"
+      - "0BR"
+      - "Efficiency"
+    1BR:
+      - "1BR"
+      - "1"
+      - "1 Bed"
+      - "1 Bedroom"
+      - "One Bed"
+    2BR:
+      - "2BR"
+      - "2"
+      - "2 Bed"
+      - "2 Bedroom"
+      - "Two Bed"
+    3BR:
+      - "3BR"
+      - "3"
+      - "3 Bed"
+      - "3 Bedroom"
+      - "Three Bed"
+    4BR:
+      - "4BR"
+      - "4"
+      - "4 Bed"
+      - "4 Bedroom"
+      - "Four Bed"
+
+  # Row filtering rules
+  row_filters:
+    # Skip rows where these columns are empty
+    require_non_empty: ["unit_id"]
+    # Skip rows where unit_id matches these patterns (totals, headers, etc.)
+    skip_patterns:
+      - "^Total"
+      - "^Subtotal"
+      - "^Grand Total"
+      - "^$"
+    # Only include rows where status is in this list (empty = include all)
+    include_statuses: []
+
+  # Data transformations
+  transformations:
+    # Parse combined bed/bath fields like "2/2" or "2BR/2BA"
+    parse_bed_bath_combined: false
+    bed_bath_separator: "/"
+
+    # Extract numeric values from strings like "$1,500" or "1,200 SF"
+    clean_currency: true
+    clean_sqft: true
+
+    # Date format for parsing (strptime format)
+    date_format: "%m/%d/%Y"
+
+    # Calculate total rent from income columns if not present
+    calculate_total_rent: true

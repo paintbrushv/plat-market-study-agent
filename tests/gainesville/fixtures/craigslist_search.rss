@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns="http://purl.org/rss/1.0/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <item rdf:about="https://dallas.craigslist.org/dal/apa/d/gainesville-3br-2ba/7654321.html">
+    <title>3BR/2BA in Gainesville TX - $1500</title>
+    <link>https://dallas.craigslist.org/dal/apa/d/gainesville-3br-2ba/7654321.html</link>
+    <dc:date>2026-05-08T10:30:00-05:00</dc:date>
+  </item>
+  <item rdf:about="https://dallas.craigslist.org/dal/apa/d/whitesboro-2br/7654322.html">
+    <title>2BR Apt - $1100 / 850ft - Whitesboro</title>
+    <link>https://dallas.craigslist.org/dal/apa/d/whitesboro-2br/7654322.html</link>
+    <dc:date>2026-05-09T09:15:00-05:00</dc:date>
+  </item>
+  <item rdf:about="https://dallas.craigslist.org/dal/apa/d/dallas-luxury/7654323.html">
+    <title>Luxury Downtown Dallas Loft - $3200</title>
+    <link>https://dallas.craigslist.org/dal/apa/d/dallas-luxury/7654323.html</link>
+    <dc:date>2026-05-09T08:00:00-05:00</dc:date>
+  </item>
+</rdf:RDF>

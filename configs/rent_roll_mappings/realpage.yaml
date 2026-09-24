@@ -1,0 +1,262 @@
+# RealPage OneSite Rent Roll Mapping Configuration
+# Covers standard RealPage/OneSite exports
+
+source_system: "RealPage OneSite"
+version: "1.0"
+description: "Standard RealPage OneSite rent roll and availability report mappings"
+
+file_settings:
+  extensions: [".xlsx", ".xls", ".csv"]
+  header_row: auto
+  sheet: 0
+  skip_rows_after_header: 0
+  encoding: "utf-8"
+  detect_header_keywords: ["Unit", "Unit #", "Unit ID", "Apt"]
+
+column_mappings:
+  unit_id:
+    - "Unit #"
+    - "Unit"
+    - "Unit ID"
+    - "Apt"
+    - "Apt #"
+    - "Apartment"
+    - "Unit Number"
+
+  floorplan_code:
+    - "Floor Plan"
+    - "Floorplan"
+    - "Unit Type"
+    - "Type"
+    - "Plan"
+    - "FP"
+    - "Floor Plan Code"
+
+  bed_type:
+    - "Beds"
+    - "BR"
+    - "Bedrooms"
+    - "# of Beds"
+    - "Bed"
+
+  bath_count:
+    - "Baths"
+    - "BA"
+    - "Bathrooms"
+    - "# of Baths"
+    - "Bath"
+
+  sqft:
+    - "Sq. Ft."
+    - "Sq Ft"
+    - "SqFt"
+    - "Square Feet"
+    - "SQFT"
+    - "Size"
+    - "Unit Sq Ft"
+
+  market_rent:
+    - "Market Rent"
+    - "Market"
+    - "Asking Rent"
+    - "Asking"
+    - "Mkt"
+    - "Current Market"
+
+  lease_rent:
+    - "Actual Rent"
+    - "Lease Rent"
+    - "Current Rent"
+    - "Rent"
+    - "Total Rent"
+    - "Gross Rent"
+    - "Scheduled Rent"
+
+  status:
+    - "Status"
+    - "Unit Status"
+    - "Occupancy"
+    - "Occ"
+    - "Current Status"
+
+  resident_name:
+    - "Resident Name"
+    - "Resident"
+    - "Name"
+    - "Tenant"
+    - "Leaseholder"
+    - "Primary Resident"
+
+  move_in_date:
+    - "Move-In"
+    - "Move In"
+    - "Move In Date"
+    - "MoveIn Date"
+    - "MI Date"
+
+  lease_start:
+    - "Lease Start"
+    - "Lease Begin"
+    - "Start"
+    - "Begin Date"
+    - "Lease From"
+
+  lease_end:
+    - "Lease End"
+    - "Lease Expiration"
+    - "Expiration"
+    - "Exp"
+    - "Exp Date"
+    - "End"
+    - "Lease Expire"
+
+income_columns:
+  base_rent:
+    - "Base Rent"
+    - "Base"
+    - "Rent"
+    - "Unit Rent"
+    - "Apt Rent"
+
+  pet_rent:
+    - "Pet Rent"
+    - "Pet"
+    - "Pet Fee"
+    - "Pet Deposit"
+
+  parking_rent:
+    - "Parking"
+    - "Parking Rent"
+    - "Garage"
+    - "Reserved Parking"
+    - "Covered Parking"
+
+  storage_rent:
+    - "Storage"
+    - "Storage Rent"
+    - "Storage Unit"
+
+  utility_reimbursement:
+    - "RUBS"
+    - "Utility"
+    - "Utilities"
+    - "Water"
+    - "Sewer"
+    - "Water/Sewer"
+    - "Trash"
+    - "Valet Trash"
+    - "Cable"
+    - "Electric"
+    - "Ratio Utility"
+
+  other_income:
+    - "Other"
+    - "Other Charges"
+    - "Misc"
+    - "W/D"
+    - "Washer Dryer"
+    - "Additional"
+    - "Add'l Income"
+    - "Amenities"
+
+  concessions:
+    - "Concession"
+    - "Concessions"
+    - "Credit"
+    - "Discount"
+    - "Specials"
+    - "Monthly Concession"
+
+status_mappings:
+  Occupied:
+    - "Occupied"
+    - "Leased"
+    - "Current"
+    - "Rented"
+    - "OCC"
+    - "O"
+  Vacant:
+    - "Vacant"
+    - "Available"
+    - "Ready"
+    - "Vacant Ready"
+    - "VAC"
+    - "V"
+  Notice:
+    - "Notice"
+    - "NTV"
+    - "Notice to Vacate"
+    - "On Notice"
+    - "Pending Move Out"
+  Down:
+    - "Down"
+    - "Offline"
+    - "Out of Service"
+    - "Make Ready"
+    - "Not Ready"
+    - "Rehab"
+  Model:
+    - "Model"
+    - "Show"
+    - "Display"
+
+bed_type_mappings:
+  Studio:
+    - "Studio"
+    - "STU"
+    - "S"
+    - "0"
+    - "0BR"
+    - "Eff"
+    - "Efficiency"
+  1BR:
+    - "1BR"
+    - "1"
+    - "1B"
+    - "1 Bed"
+    - "1 Bedroom"
+    - "One Bed"
+  2BR:
+    - "2BR"
+    - "2"
+    - "2B"
+    - "2 Bed"
+    - "2 Bedroom"
+    - "Two Bed"
+  3BR:
+    - "3BR"
+    - "3"
+    - "3B"
+    - "3 Bed"
+    - "3 Bedroom"
+    - "Three Bed"
+  4BR:
+    - "4BR"
+    - "4"
+    - "4B"
+    - "4 Bed"
+    - "4 Bedroom"
+    - "Four Bed"
+
+row_filters:
+  require_non_empty: ["unit_id"]
+  skip_patterns:
+    - "^Total"
+    - "^Subtotal"
+    - "^Grand Total"
+    - "^Property Total"
+    - "^Summary"
+    - "^$"
+  include_statuses: []
+
+transformations:
+  parse_bed_bath_combined: false
+  bed_bath_separator: "/"
+  clean_currency: true
+  clean_sqft: true
+  date_format: "%m/%d/%Y"
+  alternate_date_formats:
+    - "%Y-%m-%d"
+    - "%m-%d-%Y"
+    - "%m/%d/%y"
+  calculate_total_rent: true

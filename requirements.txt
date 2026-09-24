@@ -1,0 +1,10 @@
+﻿PyYAML>=6.0
+pandas>=2.2.0
+pyarrow>=16.0.0
+matplotlib>=3.8.0
+jsonschema>=4.22.0
+pdfminer.six>=20231228
+ruff>=0.6.4
+black>=24.8.0
+mypy>=1.11.2
+pytest>=8.3.0

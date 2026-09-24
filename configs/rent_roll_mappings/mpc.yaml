@@ -1,0 +1,64 @@
+description: "MPC Magnolia Property Management - horizontal charge columns"
+# Format: Entrata-style rent roll with one row per lease (multiple rows per unit
+# for Former residents and Applicants). Charges are horizontal columns.
+
+file_settings:
+  header_row: 5
+  detect_header_keywords: ["Unit", "Floorplan", "SQFT", "Unit/Lease Status"]
+
+column_mappings:
+  unit_id: ["Unit"]
+  floorplan_code: ["Floorplan"]
+  sqft: ["SQFT"]
+  status: ["Unit/Lease Status"]
+  resident_name: ["Name"]
+  move_in_date: ["Move-In"]
+  lease_start: ["Lease Start"]
+  lease_end: ["Lease End"]
+  market_rent: ["Market + Addl."]
+  lease_rent: ["Lease Rent"]
+  bed_type: []
+  bath_count: []
+
+income_columns:
+  base_rent: ["RENT"]
+  pet_rent: ["PETRENT"]
+  parking_rent: ["PARKING"]
+  storage_rent: ["STORAGE"]
+  utility_reimbursement: ["CONV-PKG"]
+  other_income: ["DEPOSITPREMIUM", "ASSETPROTECT"]
+  concessions: ["CONC/SPECL"]
+
+status_mappings:
+  Occupied:
+    - "Occupied"
+  Notice:
+    - "Occupied-NTV"
+    - "Occupied-NTVL"
+  Vacant:
+    - "Vacant"
+  Vacant-Leased:
+    - "Vacant-Leased"
+
+bed_type_mappings: {}
+
+row_filters:
+  include_statuses:
+    - "Occupied"
+    - "Notice"
+    - "Vacant"
+    - "Vacant-Leased"
+  skip_patterns:
+    - "^Totals"
+    - "^Parameters"
+    - "^Note"
+    - "^--"
+
+transformations:
+  clean_currency: true
+  clean_sqft: true
+  date_format: "%Y-%m-%d %H:%M:%S"
+  alternate_date_formats:
+    - "%m/%d/%Y"
+    - "%Y-%m-%d"
+  calculate_total_rent: true

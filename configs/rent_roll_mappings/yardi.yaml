@@ -1,0 +1,278 @@
+# Yardi Voyager Rent Roll Mapping Configuration
+# Covers standard Yardi exports including Rent Roll, Unit Availability, and Resident reports
+
+source_system: "Yardi Voyager"
+version: "1.0"
+description: "Standard Yardi Voyager rent roll and unit export mappings"
+
+file_settings:
+  extensions: [".xlsx", ".xls", ".csv"]
+  header_row: auto  # Yardi reports often have title rows before headers
+  sheet: 0
+  skip_rows_after_header: 0
+  encoding: "utf-8"
+  # Yardi often includes property header info - skip until we find unit data
+  detect_header_keywords: ["Unit", "Unit #", "Unit Number", "UnitID"]
+
+column_mappings:
+  unit_id:
+    - "Unit"
+    - "Unit #"
+    - "Unit Number"
+    - "UnitCode"
+    - "Unit Code"
+    - "Unit ID"
+
+  floorplan_code:
+    - "Floor Plan"
+    - "FloorPlan"
+    - "Floorplan"
+    - "Unit Type"
+    - "UnitType"
+    - "Plan"
+    - "Plan Code"
+    - "Type"
+
+  bed_type:
+    - "Beds"
+    - "Bedrooms"
+    - "BR"
+    - "# Beds"
+    - "Bed"
+
+  bath_count:
+    - "Baths"
+    - "Bathrooms"
+    - "BA"
+    - "# Baths"
+    - "Bath"
+
+  sqft:
+    - "Sq Ft"
+    - "SqFt"
+    - "SQFT"
+    - "Square Feet"
+    - "Unit SQFT"
+    - "Size"
+    - "Unit Size"
+
+  market_rent:
+    - "Market Rent"
+    - "Market"
+    - "Mkt Rent"
+    - "Market Rate"
+    - "MarketRent"
+    - "Asking Rent"
+
+  lease_rent:
+    - "Lease Rent"
+    - "Current Rent"
+    - "Actual Rent"
+    - "Contract Rent"
+    - "Rent"
+    - "Resident Rent"
+    - "Total Rent"
+
+  status:
+    - "Status"
+    - "Unit Status"
+    - "Occupancy Status"
+    - "Occ Status"
+    - "Vacancy Status"
+
+  resident_name:
+    - "Resident"
+    - "Resident Name"
+    - "Primary Resident"
+    - "Tenant"
+    - "Tenant Name"
+    - "Name"
+
+  move_in_date:
+    - "Move In"
+    - "Move-In"
+    - "Move In Date"
+    - "MoveIn"
+    - "Move-In Date"
+    - "Movein"
+
+  lease_start:
+    - "Lease Start"
+    - "Lease From"
+    - "Lease Begin"
+    - "Start Date"
+    - "Lease Start Date"
+
+  lease_end:
+    - "Lease End"
+    - "Lease Expiration"
+    - "Lease Exp"
+    - "Expiration"
+    - "Lease To"
+    - "End Date"
+    - "Lease End Date"
+    - "Lease Expire"
+
+income_columns:
+  base_rent:
+    - "Base Rent"
+    - "Base"
+    - "Rent Amount"
+    - "Contract Rent"
+    - "Scheduled Rent"
+
+  pet_rent:
+    - "Pet Rent"
+    - "Pet"
+    - "Pet Fee"
+    - "Pet Premium"
+
+  parking_rent:
+    - "Parking"
+    - "Parking Rent"
+    - "Garage"
+    - "Garage Rent"
+    - "Carport"
+    - "Covered Parking"
+
+  storage_rent:
+    - "Storage"
+    - "Storage Rent"
+    - "Storage Fee"
+
+  utility_reimbursement:
+    - "RUBS"
+    - "Utility Billing"
+    - "Utility Reimbursement"
+    - "Water/Sewer"
+    - "Water"
+    - "Sewer"
+    - "Trash"
+    - "Electric"
+    - "Gas"
+    - "Cable"
+    - "Internet"
+    - "Valet Trash"
+
+  other_income:
+    - "Other"
+    - "Other Income"
+    - "Misc"
+    - "Miscellaneous"
+    - "Additional Rent"
+    - "Add'l Rent"
+    - "Washer/Dryer"
+    - "W/D Rent"
+    - "Amenity Fee"
+
+  concessions:
+    - "Concession"
+    - "Concessions"
+    - "Discount"
+    - "Credit"
+    - "Monthly Concession"
+    - "Recurring Concession"
+
+status_mappings:
+  Occupied:
+    - "Occupied"
+    - "Occupied-NR"
+    - "Occupied-R"
+    - "Current"
+    - "Leased"
+    - "OCCU"
+    - "OCC"
+  Vacant:
+    - "Vacant"
+    - "Vacant-Ready"
+    - "Vacant-Unrented"
+    - "Available"
+    - "VAC"
+    - "VACA"
+  Notice:
+    - "Notice"
+    - "Notice-Rented"
+    - "Notice-Unrented"
+    - "NTV"
+    - "On Notice"
+    - "NOTI"
+  Down:
+    - "Down"
+    - "Down Unit"
+    - "Offline"
+    - "Make Ready"
+    - "Rehab"
+    - "DOWN"
+    - "Admin"
+  Model:
+    - "Model"
+    - "MODEL"
+    - "Show Unit"
+
+bed_type_mappings:
+  Studio:
+    - "Studio"
+    - "STU"
+    - "STUD"
+    - "S"
+    - "0"
+    - "0BR"
+    - "Efficiency"
+    - "EFF"
+  1BR:
+    - "1BR"
+    - "1"
+    - "1 Bed"
+    - "1 Bedroom"
+    - "One"
+    - "1B"
+    - "1BD"
+  2BR:
+    - "2BR"
+    - "2"
+    - "2 Bed"
+    - "2 Bedroom"
+    - "Two"
+    - "2B"
+    - "2BD"
+  3BR:
+    - "3BR"
+    - "3"
+    - "3 Bed"
+    - "3 Bedroom"
+    - "Three"
+    - "3B"
+    - "3BD"
+  4BR:
+    - "4BR"
+    - "4"
+    - "4 Bed"
+    - "4 Bedroom"
+    - "Four"
+    - "4B"
+    - "4BD"
+
+row_filters:
+  require_non_empty: ["unit_id"]
+  skip_patterns:
+    - "^Total"
+    - "^Subtotal"
+    - "^Grand Total"
+    - "^Property Total"
+    - "^Building Total"
+    - "^Report Total"
+    - "^$"
+    - "^Page \\d+"
+  include_statuses: []
+
+transformations:
+  parse_bed_bath_combined: false
+  bed_bath_separator: "/"
+  clean_currency: true
+  clean_sqft: true
+  date_format: "%m/%d/%Y"
+  alternate_date_formats:
+    - "%Y-%m-%d"
+    - "%m-%d-%Y"
+    - "%d-%b-%Y"
+  calculate_total_rent: true

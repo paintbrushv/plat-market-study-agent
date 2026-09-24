@@ -1,0 +1,235 @@
+# AppFolio Rent Roll Mapping Configuration
+# Covers standard AppFolio property management exports
+
+source_system: "AppFolio"
+version: "1.0"
+description: "Standard AppFolio rent roll and unit listing export mappings"
+
+file_settings:
+  extensions: [".xlsx", ".xls", ".csv"]
+  header_row: 0  # AppFolio typically has headers in first row
+  sheet: 0
+  skip_rows_after_header: 0
+  encoding: "utf-8"
+  detect_header_keywords: ["Unit", "Address", "Unit Name"]
+
+column_mappings:
+  unit_id:
+    - "Unit"
+    - "Unit Name"
+    - "Unit #"
+    - "Unit Number"
+    - "Address"
+    - "Unit Address"
+
+  floorplan_code:
+    - "Floor Plan"
+    - "Floorplan"
+    - "Unit Type"
+    - "Type"
+    - "Plan"
+    - "Layout"
+
+  bed_type:
+    - "Beds"
+    - "Bedrooms"
+    - "BR"
+    - "# Beds"
+    - "Bed/Bath"  # AppFolio sometimes combines these
+
+  bath_count:
+    - "Baths"
+    - "Bathrooms"
+    - "BA"
+    - "# Baths"
+
+  sqft:
+    - "Sq Ft"
+    - "SqFt"
+    - "Square Feet"
+    - "Size"
+    - "Unit Size"
+    - "SQFT"
+
+  market_rent:
+    - "Market Rent"
+    - "Market"
+    - "Target Rent"
+    - "Asking Rent"
+    - "Listed Rent"
+
+  lease_rent:
+    - "Rent"
+    - "Current Rent"
+    - "Lease Rent"
+    - "Monthly Rent"
+    - "Actual Rent"
+    - "Rent Amount"
+
+  status:
+    - "Status"
+    - "Unit Status"
+    - "Occupancy"
+    - "Availability"
+
+  resident_name:
+    - "Tenant"
+    - "Tenant Name"
+    - "Resident"
+    - "Resident Name"
+    - "Lessee"
+    - "Name"
+
+  move_in_date:
+    - "Move In"
+    - "Move-In Date"
+    - "Move In Date"
+    - "Moved In"
+
+  lease_start:
+    - "Lease Start"
+    - "Lease Start Date"
+    - "Start Date"
+    - "Lease Begin"
+
+  lease_end:
+    - "Lease End"
+    - "Lease End Date"
+    - "Lease Expiration"
+    - "Expiration"
+    - "End Date"
+
+income_columns:
+  base_rent:
+    - "Base Rent"
+    - "Rent"
+    - "Monthly Rent"
+    - "Unit Rent"
+
+  pet_rent:
+    - "Pet Rent"
+    - "Pet"
+    - "Pet Fee"
+    - "Monthly Pet Rent"
+
+  parking_rent:
+    - "Parking"
+    - "Parking Rent"
+    - "Garage"
+    - "Parking Fee"
+
+  storage_rent:
+    - "Storage"
+    - "Storage Rent"
+    - "Storage Fee"
+
+  utility_reimbursement:
+    - "Utilities"
+    - "Utility"
+    - "RUBS"
+    - "Water"
+    - "Sewer"
+    - "Trash"
+    - "Electric"
+    - "Gas"
+
+  other_income:
+    - "Other"
+    - "Other Income"
+    - "Additional"
+    - "Misc"
+    - "Amenities"
+    - "Extra Charges"
+
+  concessions:
+    - "Concession"
+    - "Concessions"
+    - "Discount"
+    - "Credit"
+    - "Move-In Special"
+
+status_mappings:
+  Occupied:
+    - "Occupied"
+    - "Rented"
+    - "Leased"
+    - "Current"
+    - "Active"
+  Vacant:
+    - "Vacant"
+    - "Available"
+    - "For Rent"
+    - "Unrented"
+    - "Open"
+  Notice:
+    - "Notice"
+    - "Notice to Vacate"
+    - "NTV"
+    - "Pending"
+    - "Move Out Scheduled"
+  Down:
+    - "Down"
+    - "Unavailable"
+    - "Maintenance"
+    - "Offline"
+    - "Rehab"
+    - "Renovation"
+  Model:
+    - "Model"
+    - "Show Unit"
+    - "Display"
+
+bed_type_mappings:
+  Studio:
+    - "Studio"
+    - "STU"
+    - "0"
+    - "0 Bed"
+    - "Efficiency"
+    - "Bachelor"
+  1BR:
+    - "1"
+    - "1BR"
+    - "1 Bed"
+    - "1 Bedroom"
+    - "One Bedroom"
+  2BR:
+    - "2"
+    - "2BR"
+    - "2 Bed"
+    - "2 Bedroom"
+    - "Two Bedroom"
+  3BR:
+    - "3"
+    - "3BR"
+    - "3 Bed"
+    - "3 Bedroom"
+    - "Three Bedroom"
+  4BR:
+    - "4"
+    - "4BR"
+    - "4 Bed"
+    - "4 Bedroom"
+    - "Four Bedroom"
+
+row_filters:
+  require_non_empty: ["unit_id"]
+  skip_patterns:
+    - "^Total"
+    - "^Totals"
+    - "^Subtotal"
+    - "^Property Total"
+    - "^$"
+  include_statuses: []
+
+transformations:
+  parse_bed_bath_combined: true  # AppFolio often has "2/2" format
+  bed_bath_separator: "/"
+  clean_currency: true
+  clean_sqft: true
+  date_format: "%m/%d/%Y"
+  alternate_date_formats:
+    - "%Y-%m-%d"
+    - "%m/%d/%y"
+    - "%b %d, %Y"
+  calculate_total_rent: true

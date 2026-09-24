@@ -1,0 +1,82 @@
+# Asset Context Template
+# =====================
+# Place a copy of this file at: reports/<metro>/<property>/asset_context.yaml
+#
+# This file provides qualitative and operational context that the AI cannot
+# derive from rent rolls or scraped comp data. Analysis skills (analyze-comps,
+# rent-roll) read this file before generating reports.
+#
+# Update this file whenever management makes pricing decisions, offers new
+# concessions, or experiences operational events that affect the numbers.
+# Delete or comment out sections that don't apply.
+
+# --- Subject Concessions ---
+# Concessions the subject is currently offering. Include both advertised
+# and unadvertised concessions. This is critical — if it's not here, the
+# AI assumes no subject concession and will miscalculate effective rents.
+subject_concessions:
+  - type: "1 month free"            # e.g., "1 month free", "6 weeks free", "$500 off first month"
+    applies_to: "all floorplans"     # e.g., "all floorplans", "1BR only", "B2 and B3 plans"
+    properties: "all"                # e.g., "all", "Silver Oaks only", "Building A"
+    effective_date: "2026-01-15"     # When this concession started
+    end_date: null                   # null = ongoing; set a date if time-limited
+    advertised: false                # true = on ILS/website; false = offered at tour/app
+    notes: ""
+
+# --- Pricing Decisions ---
+# Log of recent management pricing decisions. Helps the AI understand
+# WHY rents changed between rent roll snapshots, not just THAT they changed.
+pricing_decisions:
+  - date: "2026-02-01"
+    plans: ["1x1SO", "2brSO"]       # Floorplan codes affected
+    action: "Reduced market rent"    # e.g., "Reduced market rent", "Increased $25", "Reset to market"
+    amount: "-$25 to -$50"           # Dollar or percent change
+    rationale: "Align with achievable rents; occupancy priority over rent growth"
+    # expected_outcome: "Fill 5 vacant units in 60 days"
+
+# --- Operational Events ---
+# Non-market events that affect the numbers. Evictions, floods, renovations,
+# construction disruption, staffing changes, etc. Without this context,
+# the AI will misattribute vacancy to market conditions.
+operational_events:
+  - date: "2025-12"
+    property: "Silver Oaks"          # Which property/building affected
+    event: "Eviction wave"           # Short description
+    units_affected: 12               # Approximate number of units
+    impact: "Vacancy spike is eviction-driven, not demand-driven"
+    expected_resolution: "Backfill over 60-90 days; expect spring absorption"
+    resolved: false                  # true once the event's impact has cleared
+
+# --- Seasonal Context ---
+# Submarket-specific seasonal patterns. Helps the AI avoid overreacting
+# to seasonal vacancy or underweighting seasonal demand.
+seasonal_notes: |
+  Leasing peaks March-August, troughs November-January.
+  Current vacancy partly reflects seasonal trough.
+  UAB academic calendar drives some demand (Aug move-ins, May move-outs).
+
+# --- Market Context ---
+# Broader market dynamics not visible in comp data. New supply, employer
+# changes, infrastructure projects, regulatory changes, etc.
+market_context: |
+  No new supply expected in submarket through 2027.
+  UAB Medical Center expansion ongoing — positive demand driver.
+
+# --- Renovation / CapEx ---
+# In-progress or planned renovations that affect unit availability or
+# future rent potential.
+renovations:
+  - property: "Central Station"
+    scope: "Interior unit upgrades"
+    units_affected: 5
+    timeline: "2026-Q1"
+    expected_premium: "$75-100/unit"
+    status: "in_progress"            # planned, in_progress, completed
+
+# --- Owner/Operator Strategy ---
+# High-level strategic direction that should inform AI recommendations.
+# Prevents the AI from recommending actions that conflict with strategy.
+strategy_notes: |
+  Current priority: occupancy stabilization over rent growth.
+  Willing to concede on rent to fill units.
+  Targeting 90%+ physical occupancy by summer 2026.

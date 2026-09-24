@@ -1,0 +1,18 @@
+﻿allow_verbatim_from_paid: false
+allow_paraphrase_from_paid: false
+allow_aggregates_from_paid: true
+exclude_from_index:
+  providers:
+    - COSTAR-MKT
+  keywords:
+    - "costar"
+public_priority_sources:
+  - BLS-LAUS
+  - CENSUS-BPS
+  - HUD-USER
+paid_metadata_only:
+  - CBRE-CAP
+  - COSTAR-MKT
+redaction_keywords:
+  - "Confidential"
+  - "Do not distribute"

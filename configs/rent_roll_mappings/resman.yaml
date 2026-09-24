@@ -1,0 +1,295 @@
+# ResMan Rent Roll Mapping Configuration
+# Covers standard ResMan property management exports
+
+source_system: "ResMan"
+version: "1.0"
+description: "Standard ResMan rent roll and unit inventory export mappings"
+
+file_settings:
+  extensions: [".xlsx", ".xls", ".csv"]
+  header_row: auto
+  sheet: 0
+  skip_rows_after_header: 0
+  encoding: "utf-8"
+  detect_header_keywords: ["Unit", "Unit #", "Unit Number", "Unit ID"]
+
+column_mappings:
+  unit_id:
+    - "Unit #"
+    - "Unit"
+    - "Unit Number"
+    - "Unit ID"
+    - "Unit Name"
+    - "Apt"
+
+  floorplan_code:
+    - "Floor Plan"
+    - "Floorplan"
+    - "Floor Plan Name"
+    - "Unit Type"
+    - "Type"
+    - "Plan"
+    - "FP Code"
+    - "Plan Code"
+
+  bed_type:
+    - "Beds"
+    - "Bedrooms"
+    - "BR"
+    - "# Beds"
+    - "Bed Count"
+
+  bath_count:
+    - "Baths"
+    - "Bathrooms"
+    - "BA"
+    - "# Baths"
+    - "Bath Count"
+
+  sqft:
+    - "Sq Ft"
+    - "SqFt"
+    - "Square Feet"
+    - "SQFT"
+    - "Size"
+    - "Unit Sq Ft"
+    - "Unit Size"
+
+  market_rent:
+    - "Market Rent"
+    - "Market"
+    - "Mkt Rent"
+    - "Asking Rent"
+    - "Target Rent"
+    - "Advertised Rent"
+
+  lease_rent:
+    - "Lease Rent"
+    - "Rent"
+    - "Current Rent"
+    - "Actual Rent"
+    - "Scheduled Rent"
+    - "Gross Rent"
+    - "Total Charges"
+
+  status:
+    - "Status"
+    - "Unit Status"
+    - "Occupancy Status"
+    - "Occupancy"
+    - "Availability"
+
+  resident_name:
+    - "Resident"
+    - "Resident Name"
+    - "Primary Resident"
+    - "Tenant"
+    - "Leaseholder"
+    - "Name"
+
+  move_in_date:
+    - "Move In"
+    - "Move-In"
+    - "Move In Date"
+    - "Move-In Date"
+    - "Moved In"
+
+  lease_start:
+    - "Lease Start"
+    - "Lease Start Date"
+    - "Lease From"
+    - "Start Date"
+    - "Lease Begin"
+
+  lease_end:
+    - "Lease End"
+    - "Lease End Date"
+    - "Lease Expiration"
+    - "Expiration"
+    - "Lease Exp"
+    - "End Date"
+    - "Exp Date"
+
+income_columns:
+  base_rent:
+    - "Base Rent"
+    - "Base"
+    - "Rent"
+    - "Unit Rent"
+    - "Scheduled Rent"
+    - "Contract Rent"
+
+  pet_rent:
+    - "Pet Rent"
+    - "Pet"
+    - "Pet Fee"
+    - "Pet Charge"
+    - "Monthly Pet"
+
+  parking_rent:
+    - "Parking"
+    - "Parking Rent"
+    - "Parking Fee"
+    - "Garage"
+    - "Carport"
+    - "Reserved Parking"
+    - "Covered Parking"
+
+  storage_rent:
+    - "Storage"
+    - "Storage Rent"
+    - "Storage Fee"
+    - "Storage Unit"
+
+  utility_reimbursement:
+    - "RUBS"
+    - "Utility Billing"
+    - "Utilities"
+    - "Utility"
+    - "Water"
+    - "Sewer"
+    - "Water/Sewer"
+    - "Trash"
+    - "Valet Trash"
+    - "Electric"
+    - "Gas"
+    - "Cable/Internet"
+
+  other_income:
+    - "Other"
+    - "Other Income"
+    - "Other Charges"
+    - "Misc"
+    - "Miscellaneous"
+    - "Additional"
+    - "W/D Rental"
+    - "Washer/Dryer"
+    - "Amenity"
+    - "Tech Package"
+
+  concessions:
+    - "Concession"
+    - "Concessions"
+    - "Monthly Concession"
+    - "Discount"
+    - "Credit"
+    - "Specials"
+    - "Recurring Concession"
+
+status_mappings:
+  Occupied:
+    - "Occupied"
+    - "Occupied - Current"
+    - "Occupied - Renewed"
+    - "Leased"
+    - "Current"
+    - "Rented"
+    - "Resident"
+  Vacant:
+    - "Vacant"
+    - "Vacant - Ready"
+    - "Vacant - Rented"
+    - "Vacant - Not Ready"
+    - "Available"
+    - "Ready"
+  Notice:
+    - "Notice"
+    - "Notice - Rented"
+    - "Notice - Not Rented"
+    - "NTV"
+    - "Notice to Vacate"
+    - "Pending Move-Out"
+    - "Move-Out Scheduled"
+  Down:
+    - "Down"
+    - "Down Unit"
+    - "Offline"
+    - "Out of Service"
+    - "Make Ready"
+    - "Maintenance"
+    - "Rehab"
+    - "Renovation"
+    - "Admin"
+  Model:
+    - "Model"
+    - "Model Unit"
+    - "Show"
+    - "Display"
+
+bed_type_mappings:
+  Studio:
+    - "Studio"
+    - "STU"
+    - "S"
+    - "0"
+    - "0BR"
+    - "0 Bed"
+    - "Efficiency"
+    - "Eff"
+  1BR:
+    - "1BR"
+    - "1"
+    - "1B"
+    - "1 Bed"
+    - "1 Bedroom"
+    - "One Bed"
+    - "1-Bedroom"
+  2BR:
+    - "2BR"
+    - "2"
+    - "2B"
+    - "2 Bed"
+    - "2 Bedroom"
+    - "Two Bed"
+    - "2-Bedroom"
+  3BR:
+    - "3BR"
+    - "3"
+    - "3B"
+    - "3 Bed"
+    - "3 Bedroom"
+    - "Three Bed"
+    - "3-Bedroom"
+  4BR:
+    - "4BR"
+    - "4"
+    - "4B"
+    - "4 Bed"
+    - "4 Bedroom"
+    - "Four Bed"
+    - "4-Bedroom"
+
+row_filters:
+  require_non_empty: ["unit_id"]
+  skip_patterns:
+    - "^Total"
+    - "^Subtotal"
+    - "^Grand Total"
+    - "^Property Total"
+    - "^Community Total"
+    - "^Report Total"
+    - "^Summary"
+    - "^$"
+  include_statuses: []
+
+transformations:
+  parse_bed_bath_combined: false
+  bed_bath_separator: "/"
+  clean_currency: true
+  clean_sqft: true
+  date_format: "%m/%d/%Y"
+  alternate_date_formats:
+    - "%Y-%m-%d"
+    - "%m-%d-%Y"
+    - "%m/%d/%y"
+    - "%d-%b-%Y"
+    - "%b %d, %Y"
+  calculate_total_rent: true
+
+# ResMan-specific settings
+resman_specific:
+  # ResMan often includes building/property prefix in unit numbers
+  strip_building_prefix: true
+  building_prefix_separator: "-"
+  # ResMan exports may include lease-level detail (multiple rows per unit)
+  aggregate_to_unit_level: true

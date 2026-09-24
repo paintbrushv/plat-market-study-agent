@@ -1,0 +1,240 @@
+# OneSite (RealPage) Detailed Rent Roll Mapping Configuration
+# Covers OneSite "RENT ROLL DETAIL" exports with multi-row header
+# Header row is auto-detected by scanning for "Bldg/Unit" keyword
+
+source_system: "OneSite (RealPage)"
+version: "1.0"
+description: "RealPage OneSite Rent Roll Detail report — multi-row header, no explicit bed column; bed type derived from floorplan prefix (S=Studio, A=1BR, B=2BR)"
+
+file_settings:
+  extensions: [".xlsx", ".xls", ".csv"]
+  header_row: auto
+  sheet: 0
+  skip_rows_after_header: 0
+  encoding: "utf-8"
+  detect_header_keywords:
+    - "Bldg/Unit"
+    - "Floorplan"
+    - "SQFT"
+
+column_mappings:
+  unit_id:
+    - "Bldg/Unit"
+    - "Unit"
+    - "Unit #"
+    - "Apt"
+
+  floorplan_code:
+    - "Floorplan"
+    - "Floor Plan"
+    - "Unit Type"
+    - "Type"
+
+  bed_type:
+    # No explicit bed column in OneSite detail report
+    # Derived from floorplan_code prefix via floorplan_bed_prefix_map below
+    - "__derived_from_floorplan__"
+
+  bath_count:
+    # Not present in OneSite detail report
+    - "__not_available__"
+
+  sqft:
+    - "SQFT"
+    - "Sq. Ft."
+    - "Sq Ft"
+    - "SqFt"
+    - "Square Feet"
+
+  market_rent:
+    - "Market + Addl."
+    - "Market Rent"
+    - "Market"
+    - "Mkt Rent"
+
+  lease_rent:
+    - "Lease Rent"
+    - "RENT"
+    - "Actual Rent"
+    - "Current Rent"
+
+  status:
+    - "Unit/Lease Status"
+    - "Status"
+    - "Unit Status"
+    - "Occupancy"
+
+  resident_name:
+    - "Name"
+    - "Resident Name"
+    - "Resident"
+    - "Tenant"
+
+  move_in_date:
+    - "Move-In"
+    - "Move In"
+    - "Move In Date"
+
+  lease_start:
+    - "Lease Start"
+    - "Start"
+    - "Begin Date"
+
+  lease_end:
+    - "Lease End"
+    - "Lease Expiration"
+    - "Expiration"
+
+income_columns:
+  base_rent:
+    - "RENT"
+    - "Base Rent"
+    - "Rent"
+
+  pet_rent:
+    - "PETRENT"
+    - "Pet Rent"
+    - "PETFEE"
+    - "Pet Fee"
+
+  parking_rent:
+    - "PARKING"
+    - "CONC/PARKING"
+    - "Parking"
+
+  storage_rent:
+    - "STORAGE"
+    - "Storage"
+
+  utility_reimbursement:
+    - "TRASHREIMB"
+    - "TRASHADMIN"
+    - "WDF"
+    - "RUBS"
+    - "Utility"
+    - "Water"
+
+  other_income:
+    - "AMENFEE"
+    - "Hometown"
+    - "MTOM"
+    - "KEYS/LOCKS"
+    - "Other"
+
+  concessions:
+    - "CONC/SPECL"
+    - "CONCRENEW"
+    - "EMPLCRED"
+    - "OFCRCRED"
+    - "Concession"
+    - "Credit"
+
+status_mappings:
+  Occupied:
+    - "Occupied"
+    - "Occupied-NTV"
+    - "Occupied-NTVL"
+    - "Pending renewal"
+    - "Pending resident"
+    - "Leased"
+    - "OCC"
+    - "O"
+  Vacant:
+    - "Vacant"
+    - "Vacant Not Leased"
+    - "Available"
+    - "VAC"
+    - "V"
+  Notice:
+    - "Occupied-NTV"
+    - "Occupied-NTVL"
+    - "Notice"
+    - "NTV"
+    - "Notice to Vacate"
+    - "Pending Move Out"
+  Vacant-Leased:
+    - "Vacant-Leased"
+    - "Vacant Leased"
+    - "Applicant"
+    - "Former applicant"
+  Down:
+    - "Admin/Down"
+    - "Down"
+    - "Offline"
+    - "Make Ready"
+    - "Rehab"
+
+# Floorplan prefix -> bed type mapping for OneSite
+# S prefix = Studio, A prefix = 1BR, B prefix = 2BR, C prefix = 3BR
+floorplan_bed_prefix_map:
+  S: Studio
+  A: 1BR
+  B: 2BR
+  C: 3BR
+  D: 4BR
+
+bed_type_mappings:
+  Studio:
+    - "Studio"
+    - "STU"
+    - "S"
+    - "0"
+    - "0BR"
+    - "Eff"
+    - "Efficiency"
+  1BR:
+    - "1BR"
+    - "1"
+    - "1B"
+    - "1 Bed"
+    - "1 Bedroom"
+    - "One Bed"
+  2BR:
+    - "2BR"
+    - "2"
+    - "2B"
+    - "2 Bed"
+    - "2 Bedroom"
+    - "Two Bed"
+  3BR:
+    - "3BR"
+    - "3"
+    - "3B"
+    - "3 Bed"
+    - "3 Bedroom"
+    - "Three Bed"
+  4BR:
+    - "4BR"
+    - "4"
+    - "4B"
+    - "4 Bed"
+    - "4 Bedroom"
+    - "Four Bed"
+
+row_filters:
+  require_non_empty: ["unit_id"]
+  skip_patterns:
+    - "^Totals"
+    - "^Total"
+    - "^Note"
+    - "^Subtotal"
+    - "^Grand Total"
+    - "^$"
+  # Exclude former residents and former applicants — historical rows
+  exclude_statuses:
+    - "Former resident"
+    - "Former applicant"
+  include_statuses: []
+
+transformations:
+  parse_bed_bath_combined: false
+  bed_bath_separator: "/"
+  clean_currency: true
+  clean_sqft: true
+  date_format: "%m/%d/%Y"
+  alternate_date_formats:
+    - "%Y-%m-%d"
+    - "%m-%d-%Y"
+    - "%m/%d/%y"
+  calculate_total_rent: true
+  derive_bed_type_from_floorplan_prefix: true

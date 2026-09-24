@@ -1,0 +1,123 @@
+# The Example - Example City, TX
+# Vertical charge layout: unit master row plus charge description/amount rows.
+
+property_name: "The Example"
+property_id: "the example"
+property_aliases:
+  - "Example"
+  - "Example Apartments"
+  - "The Example 1"
+metro: "dallas-tx"
+
+columns:
+  unit_id: 0
+  floorplan: 2
+  sqft: 4
+  resident: 5
+  status: 10
+  market_rent: 12
+  charge_description: 19
+  charge_amount: 22
+  move_in: 26
+  lease_start: 28
+  lease_end: 29
+
+unit_id_pattern: "^\\d+[A-Z]?$"
+
+skip_patterns:
+  - "unit"
+  - "rent roll"
+  - "as of"
+  - "total"
+  - "current"
+  - "printed"
+  - "collections"
+  - "account"
+  - "totals"
+  - "occupied"
+  - "vacant"
+  - "painless properties"
+  - "the example"
+
+status_mappings:
+  "C": "Occupied"
+  "NTV": "Occupied"
+  "UE": "Occupied"
+  "V": "Vacant"
+
+bed_type_rules:
+  - match_type: "prefix"
+    pattern: "A"
+    bed_type: "1BR"
+  - match_type: "prefix"
+    pattern: "B"
+    bed_type: "2BR"
+
+floorplan_mappings:
+  A1:
+    bed_type: "1BR"
+    bath_count: 1.0
+    sqft: 725
+  A2:
+    bed_type: "1BR"
+    bath_count: 1.0
+    sqft: 760
+  A3:
+    bed_type: "1BR"
+    bath_count: 1.0
+    sqft: 775
+  A4:
+    bed_type: "1BR"
+    bath_count: 1.0
+    sqft: 866
+  B1:
+    bed_type: "2BR"
+    bath_count: 1.0
+    sqft: 837
+  B2:
+    bed_type: "2BR"
+    bath_count: 2.0
+    sqft: 984
+
+charge_rules:
+  rent:
+    - "rent"
+  pet:
+    - "pet rent"
+    - "pet fee"
+    - "pet"
+  parking:
+    - "parking"
+    - "reserved parking"
+    - "carport"
+    - "garage"
+  storage:
+    - "storage"
+  utility:
+    - "trash"
+    - "water"
+    - "sewer"
+    - "pest control"
+    - "gas"
+    - "cable"
+    - "internet"
+    - "facility fee"
+  concession:
+    - "concession"
+    - "special"
+    - "discount"
+    - "credit"
+    - "off monthly"
+    - "move in special"
+    - "off every"
+    - "price of"
+    - "renewal concession"
+    - "ownership concession"
+  other:
+    - "renter"
+    - "damage waiver"
+    - "popic"
+    - "month to month"
+    - "mtm"
+    - "admin"
+    - "risk fee"

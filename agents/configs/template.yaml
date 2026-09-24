@@ -1,0 +1,40 @@
+﻿metro: "Austin, TX"
+asset_class: "Workforce Multifamily"
+time_horizon: "2025-2030"
+purpose: "Investment Thesis"
+primary_sources:
+  rents_vacancy: "COSTAR-MKT"
+  permits: "CENSUS-BPS"
+  labor: "BLS-LAUS"
+  cap_rates: "CBRE-CAP"
+retrieval:
+  allow_paid_text_chunks: false
+  allow_paid_aggregates: true
+  max_chunks: 30
+citing:
+  style: "bracket"
+  require_as_of_date: true
+  fallback_source: "Analyst Estimate"
+outputs:
+  report_path: "reports/published/{date}_{metro_slug}_MF.md"
+  assets_dir: "reports/published/assets/"
+  provenance_log: "reports/logs/build_{date}.jsonl"
+validation:
+  require_tables:
+    - "Metro Fundamentals"
+    - "Submarket Fundamentals"
+    - "Forecasts"
+  hard_stops:
+    - "missing_metro_vacancy"
+    - "missing_msa_unemployment"
+demographics:
+  state_fips: ""          # 2-digit state FIPS (e.g., "48" for TX)
+  county_fips: ""         # 3-digit county FIPS (e.g., "113" for Dallas)
+  drive_time_minutes: [10, 15, 20]  # isochrone rings for comparison
+  acs_year: 2023          # ACS 5-year estimate vintage
+  lodes_year: 2021        # LODES data year (lags ~2 years)
+  qcew_year: 2023         # BLS QCEW data year
+  trend_years: [2018, 2019, 2020, 2021, 2022, 2023]
+notes:
+  analyst: "auto"
+  distribution: "internal"

@@ -1,0 +1,101 @@
+﻿metro: "Austin, TX"
+asset_class: "Class B Multifamily"
+time_horizon: "2025-2029"
+purpose: "Investment Thesis"
+primary_sources:
+  rents_vacancy: "COSTAR-MKT"
+  permits: "CENSUS-BPS"
+  labor: "BLS-LAUS"
+  cap_rates: "CBRE-CAP"
+retrieval:
+  allow_paid_text_chunks: false
+  allow_paid_aggregates: true
+  metro_keywords:
+    - "Austin"
+    - "Travis County"
+    - "Round Rock"
+citing:
+  style: "bracket"
+  require_as_of_date: true
+outputs:
+  report_path: "reports/published/{date}_austin_tx_MF.md"
+  assets_dir: "reports/published/assets/"
+  provenance_log: "reports/logs/build_{date}_austin_tx.jsonl"
+validation:
+  require_tables:
+    - "Metro Fundamentals"
+    - "Submarket Fundamentals"
+    - "Forecasts"
+  hard_stops:
+    - "missing_metro_vacancy"
+    - "missing_msa_unemployment"
+notes:
+  metro_slug: "austin_tx"
+  preferred_currency: "USD"
+  msa_code: "12420"
+  catchment: "East Riverside / South Shore (Lady Bird Lake corridor)"
+  subject_property:
+    name: "The Collection Lady Bird Lake"
+    address: "2409 Town Lake Cir, Austin, TX 78741"
+    year_built: 1985
+    units: 120
+    submarket: "East Riverside-Oltorf"
+  target_comps:
+    - "The Spoke"
+    - "Waterloo Flats"
+    - "Easton Hills"
+    - "Emerson Apartments"
+    - "The Breakers on the Lake"
+    - "Oltera in SoEast"
+    - "Mesh Apartments"
+    - "Mesh III"
+    - "Alister Apartments"
+    - "Ovation Apartments"
+
+# Weekly comp monitoring inputs (public web data + internal subject rentroll summaries).
+# This section is used by `etl/collect_comps_snapshot.py`.
+comp_monitoring:
+  subjects:
+    - name: "The Collection Lady Bird Lake"
+      floorplan_summary_csv: "reports/austin-tx/the-collection-lady-bird-lake/rent-roll/clean/floorplan_summary.csv"
+  comps:
+    - name: "The Spoke"
+      source: websearch
+      address: "2323 Town Lake Cir, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/the-spoke-austin-tx/c6h96lg/"
+    - name: "Waterloo Flats"
+      source: websearch
+      address: "1300 Pleasant Valley Rd S, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/waterloo-flats-austin-tx/n55vxep/"
+    - name: "Easton Hills"
+      source: websearch
+      address: "1900 Burton Dr, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/easton-hills-austin-tx/g0x9yzz/"
+    - name: "Emerson Apartments"
+      source: websearch
+      address: "1919 Burton Dr, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/emerson-apartments-austin-tx/m7tz64k/"
+    - name: "The Breakers on the Lake"
+      source: websearch
+      address: "1500 E Riverside Dr, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/the-breakers-on-the-lake-austin-tx/6f87hsv/"
+    - name: "Oltera in SoEast"
+      source: websearch
+      address: "4404 E Oltorf St, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/oltera-in-soeast-austin-tx/45hg4rl/"
+    - name: "Mesh Apartments"
+      source: websearch
+      address: "2101 Elmont Dr, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/mesh-apartments-austin-tx/t0zzfe9/"
+    - name: "Mesh III"
+      source: websearch
+      address: "2439 Town Lake Cir, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/mesh-iii-austin-tx/8j710w1/"
+    - name: "Alister Apartments"
+      source: websearch
+      address: "1845 Burton Dr, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/alister-apartments-austin-tx/e4wgxwn/"
+    - name: "Ovation Apartments"
+      source: websearch
+      address: "2425 E Riverside Dr, Austin, TX 78741"
+      apartments_com_url: "https://www.apartments.com/ovation-apartments-austin-tx/46054nj/"
