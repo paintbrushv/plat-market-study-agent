@@ -5,8 +5,19 @@ from pathlib import Path
 
 import yaml
 
-from agents.runners.emit_comp_finder_envelope import build_comp_finder_response
-from plat_agent.contracts.domain.market_study import CompsArtifact
+import pytest
+
+try:
+    from agents.runners.emit_comp_finder_envelope import build_comp_finder_response
+    from plat_agent.contracts.domain.market_study import CompsArtifact
+    _PLAT_AGENT_AVAILABLE = True
+except ImportError:
+    _PLAT_AGENT_AVAILABLE = False
+
+pytestmark = pytest.mark.skipif(
+    not _PLAT_AGENT_AVAILABLE,
+    reason="optional plat-agent integration not installed (lifecycle extra)",
+)
 
 
 def _write(path: Path, payload: dict) -> None:

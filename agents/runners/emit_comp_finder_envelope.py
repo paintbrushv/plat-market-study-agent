@@ -27,11 +27,13 @@ import yaml
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-PLAT_AGENT_SRC = (REPO_ROOT.parent / "plat-agent" / "src").resolve()
-if str(PLAT_AGENT_SRC) not in sys.path:
-    sys.path.insert(0, str(PLAT_AGENT_SRC))
-
-from plat_agent.contracts.domain.market_study import CompFinderResponse
+try:
+    from plat_agent.contracts.domain.market_study import CompFinderResponse
+except ImportError as _exc:  # optional sibling-package integration
+    raise ImportError(
+        "emit_comp_finder_envelope requires the sibling plat-agent package; "
+        "install plat-agent or skip the lifecycle-envelope integration"
+    ) from _exc
 from plat_agent.contracts.domain.market_study import cohort_key
 from plat_agent.contracts.envelope import (
     ArtifactRef,
